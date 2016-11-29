@@ -1,0 +1,60 @@
+ * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
+208.102.107.208 - - [05/Nov/2016 16:13:21] "GET / HTTP/1.1" 200 -
+208.102.107.208 - - [05/Nov/2016 16:13:38] "POST /api/prime?number=5600000 HTTP/1.1" 200 -
+Traceback (most recent call last):
+  File "/var/www/html/project/project.py", line 63, in <module>
+    app.run(host='0.0.0.0',port='80' )
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 843, in run
+    run_simple(host, port, self, **options)
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/serving.py", line 694, in run_simple
+    inner()
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/serving.py", line 656, in inner
+    fd=fd)
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/serving.py", line 550, in make_server
+    passthrough_errors, ssl_context, fd=fd)
+  File "/usr/local/lib/python2.7/dist-packages/werkzeug/serving.py", line 464, in __init__
+    HTTPServer.__init__(self, (host, int(port)), handler)
+  File "/usr/lib/python2.7/SocketServer.py", line 417, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 431, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 228, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+208.102.107.208 - - [05/Nov/2016 16:16:26] "GET / HTTP/1.1" 200 -
+208.102.107.208 - - [05/Nov/2016 16:16:31] "POST /api/prime?number=-0 HTTP/1.1" 200 -
+208.102.107.208 - - [05/Nov/2016 16:16:43] "POST /api/prime?number=4 HTTP/1.1" 200 -
+ * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
+208.102.107.208 - - [05/Nov/2016 16:18:50] "GET / HTTP/1.1" 200 -
+208.102.107.208 - - [05/Nov/2016 16:19:03] "POST /api/prime?number=2 HTTP/1.1" 200 -
+208.102.107.208 - - [05/Nov/2016 16:19:11] "POST /api/prime?number=3 HTTP/1.1" 200 -
+208.102.107.208 - - [05/Nov/2016 16:19:17] "POST /api/prime?number=4 HTTP/1.1" 200 -
+208.102.107.208 - - [05/Nov/2016 16:19:24] "POST /api/prime?number=5 HTTP/1.1" 200 -
+[2016-11-05 16:20:53,466] ERROR in app: Exception on /api [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1988, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1641, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1544, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1639, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1625, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/var/www/html/project/project.py", line 15, in rsdl
+    tree   = etree.parse("rsdl", parser)
+  File "src/lxml/lxml.etree.pyx", line 3427, in lxml.etree.parse (src/lxml/lxml.etree.c:79841)
+  File "src/lxml/parser.pxi", line 1793, in lxml.etree._parseDocument (src/lxml/lxml.etree.c:116175)
+  File "src/lxml/parser.pxi", line 1819, in lxml.etree._parseDocumentFromURL (src/lxml/lxml.etree.c:116525)
+  File "src/lxml/parser.pxi", line 1723, in lxml.etree._parseDocFromFile (src/lxml/lxml.etree.c:115413)
+  File "src/lxml/parser.pxi", line 1126, in lxml.etree._BaseParser._parseDocFromFile (src/lxml/lxml.etree.c:110110)
+  File "src/lxml/parser.pxi", line 584, in lxml.etree._ParserContext._handleParseResultDoc (src/lxml/lxml.etree.c:103584)
+  File "src/lxml/parser.pxi", line 694, in lxml.etree._handleParseResult (src/lxml/lxml.etree.c:105238)
+  File "src/lxml/parser.pxi", line 622, in lxml.etree._raiseParseError (src/lxml/lxml.etree.c:104104)
+IOError: Error reading file 'rsdl': failed to load external entity "rsdl"
+208.102.107.208 - - [05/Nov/2016 16:20:53] "GET /api HTTP/1.1" 500 -
+208.102.107.208 - - [05/Nov/2016 16:20:58] "GET /api/prime?number=23 HTTP/1.1" 200 -
+208.102.107.208 - - [05/Nov/2016 16:21:28] "GET /api/prime?number=-2 HTTP/1.1" 200 -

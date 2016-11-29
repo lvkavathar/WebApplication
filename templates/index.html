@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/static/style.css">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+</head>
+<body>
+<h1 class="headbg" align="center"><i>Welcome to Math Playfield</i></h1>
+</head>
+<body style="background-color:#444444">
+<div class="weather" id="weather">
+        <h3>Weather Report</h3>
+        <input type="text" name="city" id="city" placeholder="Enter city name">
+        <button onclick="weaFun()">submit</button>
+</div>
+
+<div class="formbg">
+  <form id="prime" action="http://ec2-35-160-1-123.us-west-2.compute.amazonaws.com/api/prime" method="post">
+  <h1>Prime number or not</h1>
+  <h5>Note: checks wheather prime or not</h5>
+  <input type="number" min="1" step="1"  name="number" placeholder="Enter number" id="num">
+  <button>Submit</button>
+  </form>
+</div>
+ <div class="formbg">
+      <form id="wordcount"  action="http://ec2-35-160-1-123.us-west-2.compute.amazonaws.com/api/wordfreq" enctype="multipart/form-data" method="post">
+        <h1 id="wc">Word frequency in a file</h1>
+        <input type="file" name="file" id="file" accept=".txt"><br><br>
+        <input type="text" name="word" id="word" placeholder="Enter word">
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+<div class="formbg">
+<form id="sorting" action="http://ec2-35-160-1-123.us-west-2.compute.amazonaws.com/api/sort" method="post">
+  <h1 id="sn">Sorting array of numbers</h1>
+  <h5> Note: Enter numbers seperated by comma </h5>
+  <input type="text" name="array" id="array" placeholder="Enter array of numbers">
+  <button type="submit" id="sort" >Submit</button>
+</form>
+</div>
+
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close"> X </span>
+    <p id="ite"></p>
+  </div>
+</div>
+</body>
+<script src="/static/myscript.js"></script>
+<script  type='text/javascript'>
+    /* attach a submit handler to the form */
+       $(document).ready(function() {
+
+       $("#sorting").submit(function(event) {
+
+      /* stop form from submitting normally */
+      event.preventDefault();
+
+      /* get the action attribute from the <form action=""> element */
+      var $form = $( this ),
+          url = $form.attr( 'action' ) + "?array=" + $('#array').val(); ;
+
+      /* Send the data using post with element id name and name2*/
+      var posting = $.post( url);
+
+      /* Alerts the results */
+      posting.done(function( data ) {
+        console.log(data);
+        var a = data.result;
+       $("body").html('<html><head><link rel="stylesheet" type="text/css" href="/static/style.css"></head><body><span class="sclass"><h1>The sorted array is<br>' +a +'</h1><a href="http://ec2-35-160-1-123.us-west-2.compute.amazonaws.com/"><button >Back to playfield</button></a></span></body></html>');
+        
+      });
+    });
+    });
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script  type='text/javascript'>
+
+       $(document).ready(function() {
+       $( '#wordcount' ) .submit( function( e ) {
+       $.ajax( {
+      url: 'http://ec2-35-160-1-123.us-west-2.compute.amazonaws.com/api/wordfreq',
+      type: 'POST',
+      data: new FormData( this ),
+      processData: false,
+      contentType: false,
+      success: function(data){
+      $("body").html('<html><head><link rel="stylesheet" type="text/css" href="/static/style.css"></head><body><span class="sclass"><h1>Number of words in a file are<br>' +data.result +'</h1><a href="http://ec2-35-160-1-123.us-west-2.compute.amazonaws.com/"><button >Back to playfield</button></a></span></body></html>');}
+    } );
+    e.preventDefault();
+    });
+});
+ </script>
+
+<script  type='text/javascript'>
+
+var original = $("#weather").clone();
+	  function weaFun(){
+      city = $("#city").val();
+	  $.ajax( {
+      url: '/api/weather',
+      type: 'GET',
+      data: "city="+ city,
+      processData: false,
+      contentType: false,
+      success: function(data){
+      console.log(data);
+      var a = data.main.temp;
+	  var p = data.main.pressure;
+	  var h = data.main.humidity;
+       $("#weather").html("<h3>Weather Report for "+$('#city').val()+"</h3><h4>Temperature <span style='margin-left:2em'></span>: " +a +"K</h4><h4>Pressure <span style='margin-left:4em'></span> :" +p +"</h4><h4>Humidity <span style='margin-left:3em'>&nbsp&nbsp</span>: " +h +"</h4><input type='button' align:'center' id='check' onclick='abc()' value='Check for other'>");}
+      });
+      };
+	 function abc(){
+	 $("#weather").replaceWith(original);
+	 };
+
+    /* attach a submit handler to the form */
+       $(document).ready(function() {
+
+       $("#prime").submit(function(event) {
+
+      /* stop form from submitting normally */
+      event.preventDefault();
+
+      /* get the action attribute from the <form action=""> element */
+      var $form = $( this ),
+          url = $form.attr( 'action' ) + "?number=" + $('#num').val(); ;
+
+      /* Send the data using post with element id name and name2*/
+      var posting = $.post( url);
+
+      /* Alerts the results */
+      posting.done(function( data ) {
+        console.log(data);
+        var presult = data.result;
+	if(presult == "Prime Number")
+ 	{
+ 	 document.getElementById("ite").innerHTML = "Prime Number";
+ 	 }
+ 	else
+	 {
+	 document.getElementById("ite").innerHTML = "Not a Prime Number";
+	 }
+	modalfun();
+	function modalfun(){
+	 // Get the modal
+	var modal = document.getElementById('myModal');
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+	//displays the modal with block
+   	modal.style.display = "block"; 
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+    	modal.style.display = "none";
+	}
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+  	 if (event.target == modal) {
+        modal.style.display = "none";
+   	 }
+ 	 }
+	 }	
+       
+      });
+    });
+    });
+</script>
+
+
+</body>
+</html>
+
