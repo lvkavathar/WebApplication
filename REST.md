@@ -94,3 +94,23 @@ Content-Type: application/json
 {"result":8}
 ```
 From the above it is clear that server response is in the form of json data type
+
+Weather API
+
+##### API call:   
+http://ec2-35-160-1-123.us-west-2.compute.amazonaws.com/api/weather?city={city name}
+
+##### Parameters:   
+
+city : city name and country code divided by comma, use ISO 3166 country codes
+
+##### Example call : #####
+```API
+http://ec2-35-160-1-123.us-west-2.compute.amazonaws.com/api/weather?city=cincinnati
+```
+The output is in json format which consists of temperature, pressure, humidity metrics
+##### Response : #####
+```Result
+{"coord":{"lon":-84.46,"lat":39.16},"weather":[{"id":804,"main":"Clouds","description":"overcast clouds","icon":"04n"}],"base":"stations","main":{"temp":287.94,"pressure":1007,"humidity":54,"temp_min":286.15,"temp_max":289.15},"visibility":16093,"wind":{"speed":6.7,"deg":170},"clouds":{"all":90},"dt":1480470720,"sys":{"type":1,"id":1128,"message":0.1654,"country":"US","sunrise":1480509466,"sunset":1480544134},"id":4508722,"name":"Cincinnati","cod":200}
+```
+
