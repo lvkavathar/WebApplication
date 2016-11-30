@@ -4,6 +4,7 @@ from flask import Flask, jsonify, render_template, request, abort, make_response
 from flask import Response
 import lxml.etree as etree
 import requests
+import json
 
 ROOT_PATH = os.path.abspath(os.path.dirname(__file__))
 file_path = ROOT_PATH + "/" + "rsdl"
@@ -28,7 +29,9 @@ def weather() :
    city = request.args.get('city')
    parameters = {"q": city, "appid": "f0f34657beaede0f908cf2218c677927"}
    response=requests.get("http://api.openweathermap.org/data/2.5/weather",parameters)
-   return Response(response.content,status = response.status_code,mimetype="application/json")
+   result = json.loads(response.content)
+   a = result["main"]
+   return  jsonify(a)
 
 
 @app.route('/api/sort',methods=['GET','POST'])
@@ -74,5 +77,5 @@ def get_prime():
         else:
         	return jsonify({'result':'error:number should be a positive integer'})
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run()
 

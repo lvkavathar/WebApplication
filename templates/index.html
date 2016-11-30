@@ -105,9 +105,9 @@ var original = $("#weather").clone();
       contentType: false,
       success: function(data){
       console.log(data);
-      var a = data.main.temp;
-	  var p = data.main.pressure;
-	  var h = data.main.humidity;
+      var a = data.temp;
+	  var p = data.pressure;
+	  var h = data.humidity;
        $("#weather").html("<h3>Weather Report for "+$('#city').val()+"</h3><h4>Temperature <span style='margin-left:2em'></span>: " +a +"K</h4><h4>Pressure <span style='margin-left:4em'></span> :" +p +"</h4><h4>Humidity <span style='margin-left:3em'>&nbsp&nbsp</span>: " +h +"</h4><input type='button' align:'center' id='check' onclick='abc()' value='Check for other'>");}
       });
       };
